@@ -9,7 +9,6 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "lib": ["ES2020", "DOM"],
-    "types": ["@dcloudio/types"]
+    "lib": ["ES2020", "DOM"]
   }
 }
