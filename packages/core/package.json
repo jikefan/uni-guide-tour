@@ -1,0 +1,41 @@
+{
+  "name": "uni-guide-tour",
+  "version": "0.0.0",
+  "description": "Multi-platform guided tour SDK for uniapp + Vue 3",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:cov": "vitest run --coverage",
+    "test:watch": "vitest",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "peerDependencies": {
+    "vue": "^3.4.0",
+    "pinia": "^2.0.0"
+  },
+  "devDependencies": {
+    "@dcloudio/types": "^3.4.8",
+    "@vitejs/plugin-vue": "^5.0.0",
+    "@vitest/coverage-v8": "^1.4.0",
+    "@vue/test-utils": "^2.4.0",
+    "happy-dom": "^14.0.0",
+    "pinia": "^2.3.0",
+    "tsup": "^8.0.0",
+    "vitest": "^1.4.0",
+    "vue": "^3.4.0"
+  }
+}
