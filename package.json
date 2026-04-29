@@ -1,0 +1,23 @@
+{
+  "name": "uni-guide-tour-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "build": "pnpm -r --filter './packages/*' build",
+    "test": "pnpm -r --filter './packages/*' test",
+    "test:e2e": "pnpm --filter h5-demo test:e2e",
+    "lint": "eslint . --ext .ts,.vue",
+    "typecheck": "pnpm -r typecheck",
+    "dev:h5": "pnpm --filter h5-demo dev",
+    "release": "pnpm build && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.0",
+    "@types/node": "^20.0.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.20.0",
+    "typescript": "^5.4.0",
+    "vue-tsc": "^2.0.0"
+  }
+}
