@@ -4,6 +4,8 @@
     <view class="card" v-guide-target="'card-2'">Home Card 2 (cancel rules)</view>
     <button @click="onStart">Start tour</button>
     <button @click="onForce" style="margin-left: 8px;">Restart (force)</button>
+    <button @click="onDelayed" style="margin-left: 8px;">Start delayed</button>
+    <button @click="onMissing" style="margin-left: 8px;">Start missing</button>
     <GuideRoot />
   </view>
 </template>
@@ -21,5 +23,7 @@ const ensurePath = () => {
 }
 const onStart = () => { ensurePath(); guide.start('demo') }
 const onForce = () => { ensurePath(); guide.start('demo', { force: true }) }
+const onDelayed = () => { ensurePath(); guide.start('delayed', { force: true }) }
+const onMissing = () => { ensurePath(); guide.start('missing', { force: true }) }
 </script>
 <style>.page { padding: 16px; } .card { background:#f7f7f7; padding:16px; border-radius:8px; margin-bottom:12px; }</style>
