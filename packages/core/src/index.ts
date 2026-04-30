@@ -1,9 +1,11 @@
+import './components/guide-mask.css'
+
 export * from './types'
 export * from './errors'
 export { defineTour } from './defineTour'
 export { createGuide } from './createGuide'
 export { useGuide, GuideKey } from './composables/useGuide'
 export { vGuideTarget } from './directives/vGuideTarget'
-export { default as GuideMask } from './components/GuideMask.vue'
+export { default as GuideMask } from './components/GuideMask'
 export { computeTipPosition } from './components/computeTipPosition'
 export { createUniStorageAdapter } from './adapters/uniStorageAdapter'

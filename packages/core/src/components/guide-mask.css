@@ -1,0 +1,10 @@
+.ugt-tip__title { font-weight: 600; font-size: 16px; margin-bottom: 8px; }
+.ugt-tip__content { font-size: 14px; line-height: 1.5; }
+.ugt-tip__footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+.ugt-tip__progress { font-size: 12px; opacity: .6; }
+.ugt-tip__next {
+  background: var(--guide-button-bg, #007aff);
+  color: var(--guide-button-color, #fff);
+  border: none; border-radius: 6px;
+  padding: 6px 14px; font-size: 14px; cursor: pointer;
+}

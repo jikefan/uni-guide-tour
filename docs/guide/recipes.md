@@ -1,5 +1,21 @@
 # Recipes
 
+## Marking targets across platforms
+
+The `v-guide-target` directive is the H5/web ergonomic way:
+
+```vue
+<view v-guide-target="'card-1'">My target</view>
+```
+
+For **mini-program targets** (WeChat, Xiaohongshu, Alipay, etc.), uniapp's MP compiler doesn't transform custom directives. Use the `:data-guide-target` binding directly — it's the same effect:
+
+```vue
+<view :data-guide-target="'card-1'">My target</view>
+```
+
+The `locate.ts` engine selector `[data-guide-target="..."]` matches both forms. Pick one based on your target.
+
 ## Custom storage backend (REST)
 
 ```ts

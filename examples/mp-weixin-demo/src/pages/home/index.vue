@@ -1,7 +1,7 @@
 <template>
   <view class="page">
-    <view class="card" v-guide-target="'card-1'">Home Card 1</view>
-    <view class="card" v-guide-target="'card-2'">Home Card 2</view>
+    <view class="card" :data-guide-target="'card-1'">Home Card 1</view>
+    <view class="card" :data-guide-target="'card-2'">Home Card 2</view>
     <button @click="onStart">Start tour</button>
     <button @click="onForce" style="margin-left: 8px;">Restart (force)</button>
     <GuideRoot />
