@@ -15,12 +15,25 @@ export function useGuide() {
   const ctx = inject(GuideKey)
   if (!ctx) throw new Error('useGuide() must be used after app.use(createGuide())')
 
-  function register(tour: Tour) { ctx!.tours.set(tour.id, tour) }
+  async function register(tour: Tour) {
+    ctx!.tours.set(tour.id, tour)
+    // Hydrate this tour's state from storage (completed/running/paused).
+    await ctx!.engine.store.hydrate([tour.id])
+    // If hydrate restored a running/paused/awaiting state matching this tour, resume.
+    const store = ctx!.engine.store
+    if (store.activeTour === tour.id &&
+        (store.status === 'running' ||
+         store.status === 'paused' ||
+         store.status === 'awaiting-route')) {
+      ctx!.engine.currentTour.value = tour
+      await (ctx!.engine as any)._showCurrentStep()
+    }
+  }
   async function start(id: TourId, opts: { force?: boolean } = {}) {
     const tour = ctx!.tours.get(id)
     if (!tour) throw new TourNotRegisteredError(id)
-    if (ctx!.engine.store.status === 'running' && ctx!.engine.currentTour?.id !== id) {
-      throw new ConcurrentTourError(ctx!.engine.currentTour!.id, id)
+    if (ctx!.engine.store.status === 'running' && ctx!.engine.currentTour.value?.id !== id) {
+      throw new ConcurrentTourError(ctx!.engine.currentTour.value!.id, id)
     }
     await ctx!.engine.start(tour, opts)
   }
