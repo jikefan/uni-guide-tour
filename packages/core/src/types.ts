@@ -87,3 +87,10 @@ export interface CreateGuideOptions {
   defaultLocateIntervalMs?: number
 }
 
+export interface ScreenInfo {
+  width: number
+  height: number
+  statusBarHeight: number
+  safeBottom: number
+}
+
