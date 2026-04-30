@@ -1,0 +1,23 @@
+{
+  "name": "mp-weixin-demo",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev:mp-weixin": "uni -p mp-weixin",
+    "build:mp-weixin": "uni build -p mp-weixin"
+  },
+  "dependencies": {
+    "@dcloudio/uni-app": "3.0.0-alpha-5000820260420001",
+    "@dcloudio/uni-components": "3.0.0-alpha-5000820260420001",
+    "@dcloudio/uni-mp-weixin": "3.0.0-alpha-5000820260420001",
+    "pinia": "^2.3.0",
+    "uni-guide-tour": "workspace:*",
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {
+    "@dcloudio/types": "^3.4.8",
+    "@dcloudio/uni-cli-shared": "3.0.0-alpha-5000820260420001",
+    "@dcloudio/vite-plugin-uni": "3.0.0-alpha-5000820260420001",
+    "vite": "^5.2.0"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "mp-weixin-demo",
+  "appid": "",
+  "vueVersion": "3",
+  "mp-weixin": {
+    "appid": "",
+    "setting": { "es6": true, "minified": false, "postcss": true },
+    "usingComponents": true
+  }
+}
