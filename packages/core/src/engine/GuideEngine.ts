@@ -1,6 +1,7 @@
-import type { Rect, Tour, Step, ScreenInfo } from '../types'
+import type { Rect, Tour, ScreenInfo } from '../types'
 import type { useGuideStore } from '../store/guideStore'
 import { driveTransition } from './TransitionDriver'
+import { getStepByIndex } from './StepResolver'
 
 export interface EngineDeps {
   store: ReturnType<typeof useGuideStore>
@@ -17,10 +18,6 @@ export interface EngineDeps {
 }
 
 export interface StartOpts { force?: boolean }
-
-function getStepByIndex(tour: Tour, index: number): Step | undefined {
-  return tour.steps[index]
-}
 
 export class GuideEngine {
   store: EngineDeps['store']
