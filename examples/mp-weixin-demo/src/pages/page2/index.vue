@@ -1,6 +1,6 @@
 <template>
   <view class="page">
-    <view class="card" v-guide-target="'card-3'">Page 2 main card</view>
+    <view class="card" :data-guide-target="'card-3'">Page 2 main card</view>
     <GuideRoot />
   </view>
 </template>
