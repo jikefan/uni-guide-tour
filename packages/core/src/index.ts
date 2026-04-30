@@ -1,2 +1,2 @@
 export * from './types'
-// real exports added in later tasks
+export { default as GuideMask } from './components/GuideMask.vue'

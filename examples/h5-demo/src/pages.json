@@ -1,0 +1,4 @@
+{
+  "pages": [{ "path": "pages/home/index", "style": { "navigationBarTitleText": "Home" } }],
+  "globalStyle": { "navigationBarBackgroundColor": "#fff" }
+}

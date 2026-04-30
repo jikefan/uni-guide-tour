@@ -14,9 +14,11 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && vue-tsc -p tsconfig.build.json --emitDeclarationOnly",
     "dev": "tsup --watch",
     "test": "vitest run",
     "test:cov": "vitest run --coverage",
@@ -24,14 +26,15 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "peerDependencies": {
-    "vue": "^3.4.0",
-    "pinia": "^2.0.0"
+    "pinia": "^2.0.0",
+    "vue": "^3.4.0"
   },
   "devDependencies": {
     "@dcloudio/types": "^3.4.8",
     "@vitejs/plugin-vue": "^5.0.0",
     "@vitest/coverage-v8": "^1.4.0",
     "@vue/test-utils": "^2.4.0",
+    "esbuild-plugin-vue3": "^0.5.1",
     "happy-dom": "^14.0.0",
     "pinia": "^2.3.0",
     "tsup": "^8.0.0",
