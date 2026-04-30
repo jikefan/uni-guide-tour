@@ -1,4 +1,5 @@
 import type { Ref } from 'vue'
+import type { GuideError } from './errors'
 
 export type TourId = string
 export type StepId = string
@@ -86,8 +87,3 @@ export interface CreateGuideOptions {
   defaultLocateIntervalMs?: number
 }
 
-export interface GuideError extends Error {
-  code: string
-  tourId?: TourId
-  stepId?: StepId
-}
