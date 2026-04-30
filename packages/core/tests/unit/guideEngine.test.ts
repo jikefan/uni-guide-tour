@@ -83,4 +83,42 @@ describe('GuideEngine', () => {
     expect(e.store.currentStepIndex).toBe(0)
     expect(e.store.status).toBe('running')
   })
+
+  it('relocate updates currentRect when running, swallows locate errors', async () => {
+    const store = useGuideStore()
+    store.attachStorage(memStorage())
+    let calls = 0
+    const e = new GuideEngine({
+      store,
+      locate: async () => {
+        calls++
+        if (calls === 1) return { top: 10, left: 10, width: 100, height: 50 }
+        throw new Error('boom')
+      },
+      navigate: vi.fn(async () => undefined),
+      waitForRoute: vi.fn(async () => undefined),
+      getCurrentPage: () => '/p1',
+    })
+    await e.start(tour)
+    expect(e.currentRect).toEqual({ top: 10, left: 10, width: 100, height: 50 })
+    // Next locate call throws; relocate should swallow it and leave engine consistent
+    await e.relocate()
+    expect(e.store.status).toBe('running')
+  })
+
+  it('relocate is a no-op when not running', async () => {
+    const e = makeEngine()
+    // Without start, status is 'idle' → relocate exits early
+    await e.relocate()
+    expect(e.currentRect).toBeNull()
+  })
+
+  it('stop clears currentTour and currentRect, resets store to idle', async () => {
+    const e = makeEngine()
+    await e.start(tour)
+    await e.stop()
+    expect(e.currentTour).toBeNull()
+    expect(e.currentRect).toBeNull()
+    expect(e.store.status).toBe('idle')
+  })
 })

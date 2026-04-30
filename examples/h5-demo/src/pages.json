@@ -1,4 +1,8 @@
 {
-  "pages": [{ "path": "pages/home/index", "style": { "navigationBarTitleText": "Home" } }],
+  "pages": [
+    { "path": "pages/home/index", "style": { "navigationBarTitleText": "Home" } },
+    { "path": "pages/page2/index", "style": { "navigationBarTitleText": "Page 2" } },
+    { "path": "pages/page3/index", "style": { "navigationBarTitleText": "Page 3" } }
+  ],
   "globalStyle": { "navigationBarBackgroundColor": "#fff" }
 }
