@@ -1,4 +1,5 @@
 export * from './types'
 export * from './errors'
 export { defineTour } from './defineTour'
+export { createUniStorageAdapter } from './adapters/uniStorageAdapter'
 export { default as GuideMask } from './components/GuideMask.vue'
