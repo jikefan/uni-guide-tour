@@ -9,20 +9,15 @@
       :content="currentStep!.content"
       :button="currentStep!.button"
       :progressText="`${progress.current}/${progress.total}`"
-      @next="onNext"
+      @next="next"
     />
   </Teleport>
 </template>
 <script setup lang="ts">
-import { ref, watch, computed, inject, onMounted, onBeforeUnmount } from 'vue'
-import { GuideKey, GuideMask, computeTipPosition } from 'uni-guide-tour'
+import { ref, watch, computed, onMounted, onBeforeUnmount } from 'vue'
+import { useGuide, GuideMask, computeTipPosition } from 'uni-guide-tour'
 
-// Use GuideKey directly so we can read engine.currentTour + store.currentStepIndex
-// reactively. (The default useGuide().currentStep is a computed over a non-reactive
-// engine.currentTour and never re-evaluates after mount on H5.)
-const ctx = inject(GuideKey)!
-const { engine, currentRect } = ctx
-const store = engine.store
+const { currentStep, progress, next, currentRect } = useGuide()
 
 // Singleton claim: only the most-recently-mounted GuideRoot renders. On uniapp H5
 // pages can stay alive (keep-alive) so multiple GuideRoot instances coexist; without
@@ -37,21 +32,6 @@ const isOwner = computed(() => owner.current.value === myId)
 onMounted(() => { owner.current.value = myId })
 onBeforeUnmount(() => { if (owner.current.value === myId) owner.current.value = 0 })
 
-const currentStep = computed(() => {
-  if (store.status !== 'running' && store.status !== 'paused' && store.status !== 'awaiting-route') return null
-  const tour = engine.currentTour
-  if (!tour) return null
-  const idx = store.currentStepIndex
-  if (idx < 0 || idx >= tour.steps.length) return null
-  return tour.steps[idx]
-})
-
-const progress = computed(() => {
-  const total = engine.currentTour?.steps.length ?? 0
-  const current = store.currentStepIndex + 1
-  return { current, total, percent: total ? current / total : 0 }
-})
-
 const tipPos = ref({ top: 0, left: 0 })
 
 watch([currentStep, currentRect], () => {
@@ -64,6 +44,4 @@ watch([currentStep, currentRect], () => {
 })
 
 const visible = computed(() => isOwner.value && !!currentStep.value && !!currentRect.value)
-
-const onNext = () => engine.next()
 </script>

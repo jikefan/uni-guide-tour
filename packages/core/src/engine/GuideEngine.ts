@@ -1,3 +1,4 @@
+import { shallowRef, type ShallowRef } from 'vue'
 import type { Rect, Tour, ScreenInfo } from '../types'
 import type { useGuideStore } from '../store/guideStore'
 import { driveTransition } from './TransitionDriver'
@@ -22,8 +23,8 @@ export interface StartOpts { force?: boolean }
 export class GuideEngine {
   store: EngineDeps['store']
   deps: EngineDeps
-  currentTour: Tour | null = null
-  currentRect: Rect | null = null
+  currentTour: ShallowRef<Tour | null> = shallowRef(null)
+  currentRect: ShallowRef<Rect | null> = shallowRef(null)
 
   constructor(deps: EngineDeps) {
     this.deps = deps
@@ -32,7 +33,7 @@ export class GuideEngine {
 
   async start(tour: Tour, opts: StartOpts = {}) {
     if (this.store.completedTours[tour.id] && !opts.force) return
-    this.currentTour = tour
+    this.currentTour.value = tour
     if (opts.force) await this.store.clearTour(tour.id)
     await this.store.startTour(tour.id)
     tour.onStart?.()
@@ -40,8 +41,8 @@ export class GuideEngine {
   }
 
   async next() {
-    if (!this.currentTour) return
-    const t = this.currentTour
+    if (!this.currentTour.value) return
+    const t = this.currentTour.value
     const idx = this.store.currentStepIndex
     const step = getStepByIndex(t, idx)
     if (step) t.onStepLeave?.({ step, index: idx })
@@ -55,8 +56,8 @@ export class GuideEngine {
   }
 
   async _showCurrentStep() {
-    if (!this.currentTour) return
-    const t = this.currentTour
+    if (!this.currentTour.value) return
+    const t = this.currentTour.value
     const idx = this.store.currentStepIndex
     const step = getStepByIndex(t, idx)
     if (!step) return
@@ -81,7 +82,7 @@ export class GuideEngine {
       const baseRetries = step.locateRetries ?? t.locateRetries ?? 10
       const intervalMs = step.locateIntervalMs ?? t.locateIntervalMs ?? 50
       const finalRetries = tr.kind === 'navigated' ? Math.max(baseRetries * 2, 20) : baseRetries
-      this.currentRect = await this.deps.locate(step.target, {
+      this.currentRect.value = await this.deps.locate(step.target, {
         tourId: t.id,
         stepId: step.id,
         retries: finalRetries,
@@ -94,12 +95,12 @@ export class GuideEngine {
         (step.autoScroll ?? true) &&
         screen &&
         this.deps.pageScrollTo &&
-        (this.currentRect.top < 0 ||
-          this.currentRect.top + this.currentRect.height > screen.height)
+        (this.currentRect.value.top < 0 ||
+          this.currentRect.value.top + this.currentRect.value.height > screen.height)
       ) {
-        await this.deps.pageScrollTo(this.currentRect.top - 100)
+        await this.deps.pageScrollTo(this.currentRect.value.top - 100)
         await new Promise(r => setTimeout(r, 250))
-        this.currentRect = await this.deps.locate(step.target, {
+        this.currentRect.value = await this.deps.locate(step.target, {
           tourId: t.id,
           stepId: step.id,
           retries: 5,
@@ -115,12 +116,12 @@ export class GuideEngine {
   }
 
   async relocate() {
-    if (!this.currentTour || this.store.status !== 'running') return
-    const step = getStepByIndex(this.currentTour, this.store.currentStepIndex)
+    if (!this.currentTour.value || this.store.status !== 'running') return
+    const step = getStepByIndex(this.currentTour.value, this.store.currentStepIndex)
     if (!step) return
     try {
-      this.currentRect = await this.deps.locate(step.target, {
-        tourId: this.currentTour.id,
+      this.currentRect.value = await this.deps.locate(step.target, {
+        tourId: this.currentTour.value.id,
         stepId: step.id,
         retries: 5,
         intervalMs: 30,
@@ -130,7 +131,7 @@ export class GuideEngine {
 
   async stop() {
     await this.store.stopTour()
-    this.currentTour = null
-    this.currentRect = null
+    this.currentTour.value = null
+    this.currentRect.value = null
   }
 }

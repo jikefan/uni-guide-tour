@@ -1,6 +1,6 @@
-import { ref, computed, type App, type Plugin } from 'vue'
+import { computed, type App, type Plugin } from 'vue'
 import { createPinia, getActivePinia } from 'pinia'
-import type { CreateGuideOptions, ProgressInfo, Step, Tour, TourId, Rect } from './types'
+import type { CreateGuideOptions, ProgressInfo, Step, Tour, TourId } from './types'
 import { GuideEngine } from './engine/GuideEngine'
 import { useGuideStore } from './store/guideStore'
 import { GuideKey } from './composables/useGuide'
@@ -20,19 +20,16 @@ export function createGuide(opts: CreateGuideOptions = {}): Plugin {
       const store = useGuideStore()
       const storage = opts.storage ?? createUniStorageAdapter()
       const tours = new Map<TourId, Tour>()
-      const currentRect = ref<Rect | null>(null)
 
       const engine: GuideEngine = new GuideEngine({
         store,
         locate: async (target, c) => {
           const pages = (typeof getCurrentPages !== 'undefined') ? getCurrentPages() : []
           const page = pages[pages.length - 1]
-          const r = await locateTarget(target, { ...c, page })
-          currentRect.value = r
-          return r
+          return await locateTarget(target, { ...c, page })
         },
         navigate: (page: string): Promise<void> => navigateToPage(page, {
-          tabBarPages: [], tourId: engine.currentTour?.id ?? '', stepId: '',
+          tabBarPages: [], tourId: engine.currentTour.value?.id ?? '', stepId: '',
         }),
         waitForRoute: (page, timeoutMs = 5000) => new Promise<void>((res, rej) => {
           let off: (() => void) | null = null
@@ -50,22 +47,28 @@ export function createGuide(opts: CreateGuideOptions = {}): Plugin {
 
       store.attachStorage(storage, {
         onStorageError: (err) => {
-          engine.currentTour?.onStorageError?.({ error: err })
+          engine.currentTour.value?.onStorageError?.({ error: err })
           console.warn('[uni-guide-tour] storage error:', err)
         },
       })
 
       const currentStep = computed<Step | null>(() => {
-        if (!engine.currentTour) return null
-        return getStepByIndex(engine.currentTour, store.currentStepIndex)
+        if (!engine.currentTour.value) return null
+        // Only surface a step while the tour is actively viewable.
+        // After completeTour() the engine still holds currentTour for
+        // bookkeeping, but the mask should disappear.
+        if (store.status !== 'running' &&
+            store.status !== 'paused' &&
+            store.status !== 'awaiting-route') return null
+        return getStepByIndex(engine.currentTour.value, store.currentStepIndex)
       })
       const progress = computed<ProgressInfo>(() => {
-        const total = engine.currentTour?.steps.length ?? 0
+        const total = engine.currentTour.value?.steps.length ?? 0
         const current = store.currentStepIndex + 1
         return { current, total, percent: total ? current / total : 0 }
       })
 
-      app.provide(GuideKey, { engine, tours, currentStep: currentStep as any, progress: progress as any, currentRect })
+      app.provide(GuideKey, { engine, tours, currentStep: currentStep as any, progress: progress as any, currentRect: engine.currentRect })
       app.directive('guide-target', vGuideTarget)
       app.component('GuideMask', GuideMask)
 

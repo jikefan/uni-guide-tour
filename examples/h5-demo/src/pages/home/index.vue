@@ -9,10 +9,8 @@
 </template>
 <script setup lang="ts">
 import { useGuide } from 'uni-guide-tour'
-import demoTour from '../../tours/demo'
 import GuideRoot from '../../components/GuideRoot.vue'
 const guide = useGuide()
-guide.register(demoTour)
 // uniapp H5 shows the entry page at "/#/" by default; tests assert the explicit
 // "/pages/home/..." path. Force the hash before starting so cross-page nav has a
 // known starting URL.

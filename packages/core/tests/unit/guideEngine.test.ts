@@ -100,7 +100,7 @@ describe('GuideEngine', () => {
       getCurrentPage: () => '/p1',
     })
     await e.start(tour)
-    expect(e.currentRect).toEqual({ top: 10, left: 10, width: 100, height: 50 })
+    expect(e.currentRect.value).toEqual({ top: 10, left: 10, width: 100, height: 50 })
     // Next locate call throws; relocate should swallow it and leave engine consistent
     await e.relocate()
     expect(e.store.status).toBe('running')
@@ -110,15 +110,15 @@ describe('GuideEngine', () => {
     const e = makeEngine()
     // Without start, status is 'idle' → relocate exits early
     await e.relocate()
-    expect(e.currentRect).toBeNull()
+    expect(e.currentRect.value).toBeNull()
   })
 
   it('stop clears currentTour and currentRect, resets store to idle', async () => {
     const e = makeEngine()
     await e.start(tour)
     await e.stop()
-    expect(e.currentTour).toBeNull()
-    expect(e.currentRect).toBeNull()
+    expect(e.currentTour.value).toBeNull()
+    expect(e.currentRect.value).toBeNull()
     expect(e.store.status).toBe('idle')
   })
 })
