@@ -10,7 +10,7 @@ import { locateTarget } from './platform/locate'
 import { navigateToPage } from './platform/route'
 import { onPageEnter, getCurrentPagePath } from './platform/pageEvents'
 import { getScreenInfo, onResize, pageScrollTo } from './platform/system'
-import GuideMask from './components/GuideMask.vue'
+import GuideMask from './components/GuideMask'
 import { getStepByIndex } from './engine/StepResolver'
 
 export function createGuide(opts: CreateGuideOptions = {}): Plugin {

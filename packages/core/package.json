@@ -20,7 +20,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup && vue-tsc -p tsconfig.build.json --emitDeclarationOnly",
+    "build": "tsup",
     "dev": "tsup --watch",
     "test": "vitest run",
     "test:cov": "vitest run --coverage",
@@ -36,7 +36,6 @@
     "@vitejs/plugin-vue": "^5.0.0",
     "@vitest/coverage-v8": "^1.4.0",
     "@vue/test-utils": "^2.4.0",
-    "esbuild-plugin-vue3": "^0.5.1",
     "happy-dom": "^14.0.0",
     "pinia": "^2.3.0",
     "tsup": "^8.0.0",

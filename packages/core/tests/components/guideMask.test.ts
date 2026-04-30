@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import GuideMask from '../../src/components/GuideMask.vue'
+import GuideMask from '../../src/components/GuideMask'
 
 describe('GuideMask', () => {
   const baseHole = { top: 100, left: 50, width: 200, height: 80 }
