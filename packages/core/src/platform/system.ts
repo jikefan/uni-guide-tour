@@ -11,7 +11,15 @@ export function getScreenInfo(): ScreenInfo {
 }
 export function onResize(cb: () => void): () => void {
   uni.onWindowResize?.(cb)
-  return () => (uni as any).offWindowResize?.(cb)
+  if (typeof window !== 'undefined') {
+    window.addEventListener('resize', cb)
+  }
+  return () => {
+    (uni as any).offWindowResize?.(cb)
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('resize', cb)
+    }
+  }
 }
 export async function pageScrollTo(scrollTop: number, duration = 200): Promise<void> {
   return new Promise(res => {
