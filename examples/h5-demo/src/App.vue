@@ -1,4 +1,2 @@
-<template><GuideRoot /></template>
-<script setup lang="ts">
-import GuideRoot from './components/GuideRoot.vue'
-</script>
+<template><view /></template>
+<script setup lang="ts"></script>
