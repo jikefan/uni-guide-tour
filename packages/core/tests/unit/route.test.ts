@@ -13,7 +13,7 @@ describe('navigateToPage', () => {
   beforeEach(() => vi.clearAllMocks())
 
   it('uses switchTab when target is a tab page', async () => {
-    ;(globalThis as any).uni.switchTab = vi.fn((opts) => opts.success?.())
+    (globalThis as any).uni.switchTab = vi.fn((opts) => opts.success?.())
     ;(globalThis as any).uni.navigateTo = vi.fn()
     await navigateToPage('/pages/home/index', {
       tabBarPages: ['/pages/home/index'], tourId: 't', stepId: 's',
@@ -23,7 +23,7 @@ describe('navigateToPage', () => {
   })
 
   it('uses navigateTo when target is non-tab page', async () => {
-    ;(globalThis as any).uni.switchTab = vi.fn()
+    (globalThis as any).uni.switchTab = vi.fn()
     ;(globalThis as any).uni.navigateTo = vi.fn((opts) => opts.success?.())
     await navigateToPage('/pages/detail/x', {
       tabBarPages: ['/pages/home/index'], tourId: 't', stepId: 's',
@@ -32,7 +32,7 @@ describe('navigateToPage', () => {
   })
 
   it('rejects with GuideRouteFailedError when uni reports fail', async () => {
-    ;(globalThis as any).uni.navigateTo = vi.fn((opts) => opts.fail?.({ errMsg: 'boom' }))
+    (globalThis as any).uni.navigateTo = vi.fn((opts) => opts.fail?.({ errMsg: 'boom' }))
     await expect(navigateToPage('/pages/x', {
       tabBarPages: [], tourId: 't', stepId: 's',
     })).rejects.toThrow(GuideRouteFailedError)

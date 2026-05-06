@@ -3,11 +3,11 @@
     v-if="visible"
     :visible="true"
     :hole="{ ...currentRect!, radius: 8 }"
-    :tipPosition="tipPos"
+    :tip-position="tipPos"
     :title="currentStep!.title"
     :content="currentStep!.content"
     :button="currentStep!.button"
-    :progressText="`${progress.current}/${progress.total}`"
+    :progress-text="`${progress.current}/${progress.total}`"
     @next="next"
   />
 </template>
@@ -20,6 +20,7 @@ const tipPos = ref({ top: 0, left: 0 })
 
 watch([currentStep, currentRect], () => {
   if (!currentStep.value || !currentRect.value) return
+  // eslint-disable-next-line no-undef
   const sys = uni.getSystemInfoSync()
   tipPos.value = computeTipPosition(
     currentRect.value, { width: 280, height: 120 },

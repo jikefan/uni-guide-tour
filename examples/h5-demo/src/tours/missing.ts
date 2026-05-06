@@ -7,6 +7,6 @@ export default defineTour('missing', {
       locateRetries: 3, locateIntervalMs: 20 },
   ],
   onError: ({ error }) => {
-    ;(window as any).__lastGuideError = error?.code
+    (window as any).__lastGuideError = error?.code
   },
 })

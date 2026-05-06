@@ -1,6 +1,12 @@
 <template>
   <view class="page">
-    <view v-if="ready" class="card" v-guide-target="'card-3'">Page 2 main card</view>
+    <view
+      v-if="ready"
+      v-guide-target="'card-3'"
+      class="card"
+    >
+      Page 2 main card
+    </view>
     <GuideRoot />
   </view>
 </template>
