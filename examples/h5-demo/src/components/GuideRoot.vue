@@ -4,11 +4,11 @@
       v-if="visible"
       :visible="true"
       :hole="{ ...currentRect!, radius: 8 }"
-      :tipPosition="tipPos"
+      :tip-position="tipPos"
       :title="currentStep!.title"
       :content="currentStep!.content"
       :button="currentStep!.button"
-      :progressText="`${progress.current}/${progress.total}`"
+      :progress-text="`${progress.current}/${progress.total}`"
       @next="next"
     />
   </Teleport>
@@ -23,6 +23,7 @@ const { currentStep, progress, next, currentRect } = useGuide()
 // pages can stay alive (keep-alive) so multiple GuideRoot instances coexist; without
 // this, every page's mask would render in parallel, producing duplicate elements.
 const owner = ((): { id: number; current: any } => {
+  // eslint-disable-next-line no-undef
   const win = globalThis as any
   if (!win.__UGT_OWNER__) win.__UGT_OWNER__ = { id: 0, current: ref(0) }
   return win.__UGT_OWNER__

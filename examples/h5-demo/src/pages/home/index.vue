@@ -1,15 +1,58 @@
 <template>
   <view class="page">
-    <view class="card" v-guide-target="'card-1'">Home Card 1 (match probability)</view>
-    <view class="card" v-guide-target="'card-2'">Home Card 2 (cancel rules)</view>
-    <button @click="onStart">Start tour</button>
-    <button @click="onForce" style="margin-left: 8px;">Restart (force)</button>
-    <button @click="onDelayed" style="margin-left: 8px;">Start delayed</button>
-    <button @click="onMissing" style="margin-left: 8px;">Start missing</button>
-    <button @click="onScroll" style="margin-left: 8px;">Start scroll</button>
+    <view
+      v-guide-target="'card-1'"
+      class="card"
+    >
+      Home Card 1 (match probability)
+    </view>
+    <view
+      v-guide-target="'card-2'"
+      class="card"
+    >
+      Home Card 2 (cancel rules)
+    </view>
+    <button @click="onStart">
+      Start tour
+    </button>
+    <button
+      style="margin-left: 8px;"
+      @click="onForce"
+    >
+      Restart (force)
+    </button>
+    <button
+      style="margin-left: 8px;"
+      @click="onDelayed"
+    >
+      Start delayed
+    </button>
+    <button
+      style="margin-left: 8px;"
+      @click="onMissing"
+    >
+      Start missing
+    </button>
+    <button
+      style="margin-left: 8px;"
+      @click="onScroll"
+    >
+      Start scroll
+    </button>
     <template v-if="showScrollContent">
-      <view class="filler" v-for="i in 30" :key="i">filler {{ i }}</view>
-      <view class="card" v-guide-target="'card-bottom'">Bottom card (off-screen)</view>
+      <view
+        v-for="i in 30"
+        :key="i"
+        class="filler"
+      >
+        filler {{ i }}
+      </view>
+      <view
+        v-guide-target="'card-bottom'"
+        class="card"
+      >
+        Bottom card (off-screen)
+      </view>
     </template>
     <GuideRoot />
   </view>

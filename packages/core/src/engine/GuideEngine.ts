@@ -126,7 +126,10 @@ export class GuideEngine {
         retries: 5,
         intervalMs: 30,
       })
-    } catch {}
+    } catch {
+      // intentionally swallowed: relocate is best-effort during resize/onShow,
+      // and a transient locate failure shouldn't surface as a user-visible error.
+    }
   }
 
   async stop() {
