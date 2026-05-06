@@ -1,0 +1,59 @@
+name: Bug report
+description: Report a bug in uni-guide-tour
+labels: [bug]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: |
+        A minimal repro repo or CodeSandbox helps a lot.
+        Or paste the smallest possible code snippet that reproduces the bug.
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Platform
+      description: H5 / mp-weixin / mp-xhs / mp-alipay / app-vue / other
+      placeholder: mp-weixin
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: uni-guide-tour version
+      placeholder: 0.1.0
+    validations:
+      required: true
+  - type: input
+    id: uniapp-version
+    attributes:
+      label: uniapp version
+      description: From `@dcloudio/uni-app` in your package.json
+      placeholder: 3.0.0-alpha-...
+  - type: input
+    id: vue-version
+    attributes:
+      label: Vue version
+      placeholder: 3.4.x
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console output / errors
+      render: shell
