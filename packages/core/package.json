@@ -1,6 +1,6 @@
 {
   "name": "uni-guide-tour",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Multi-platform guided tour SDK for uniapp + Vue 3",
   "license": "MIT",
   "type": "module",
