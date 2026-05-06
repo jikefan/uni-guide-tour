@@ -1,14 +1,21 @@
 {
   "name": "@uni-guide-tour/storage-api",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist"],
-  "scripts": { "build": "tsup", "test": "vitest run" },
-  "peerDependencies": { "uni-guide-tour": "workspace:*" },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run"
+  },
+  "peerDependencies": {
+    "uni-guide-tour": "workspace:*"
+  },
   "devDependencies": {
     "tsup": "^8.0.0",
     "uni-guide-tour": "workspace:*",
