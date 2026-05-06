@@ -1,0 +1,31 @@
+name: Feature request
+description: Suggest an enhancement
+labels: [enhancement]
+body:
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use case
+      description: What are you trying to do? What's the user-facing problem?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed API or behavior
+      description: |
+        How would you like uni-guide-tour to support this?
+        Code samples / API sketches welcome.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What workarounds have you tried? Why aren't they enough?
+  - type: input
+    id: platform
+    attributes:
+      label: Platform(s) this affects
+      description: H5 / mp-weixin / all / etc.
+      placeholder: all
