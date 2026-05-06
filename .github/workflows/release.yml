@@ -26,11 +26,20 @@ jobs:
         with:
           node-version: 20
           cache: pnpm
-          registry-url: 'https://registry.npmjs.org'
+          # No registry-url here: setup-node writes an .npmrc using ${NODE_AUTH_TOKEN}
+          # which conflicts with changesets/action's own .npmrc handling. Letting
+          # changesets/action manage authentication via NPM_TOKEN below.
 
       - run: pnpm install --frozen-lockfile
 
       - run: pnpm -r --filter './packages/*' build
+
+      - name: Configure npm authentication
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
+          echo "registry=https://registry.npmjs.org/" >> ~/.npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create Release Pull Request or Publish
         uses: changesets/action@v1
